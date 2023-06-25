@@ -90,44 +90,51 @@ class RemoteFeedLoaderTests: XCTestCase{
             client.complete(withStatusCode: 200, data: json)
         })
     }
-}
-
-// MARK: - Helpers
-private func makeSUT(url: URL = URL(string: "https://url.com")!) -> (RemoteFeedLoader, HTTPClientSpy){
-    let client = HTTPClientSpy()
-    let sut = RemoteFeedLoader(url: url, client: client)
-    return (sut, client)
-}
-private func expect(_ sut: RemoteFeedLoader, with result: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line){
-    var capturedResults = [RemoteFeedLoader.Result]()
-    sut.load { capturedResults.append($0)}
     
-    action()
-    
-    XCTAssertEqual(capturedResults, [result], file: file, line: line)
-}
-private func makeFeedItem(id: UUID,
-                     description: String? = nil,
-                     location: String? = nil,
-                     imageURL: URL) -> (model: FeedItem, json: [String: Any]){
-    let model = FeedItem(id: id,
-                         description: description,
-                         location: location,
-                         imageURL: imageURL)
-    let json = [
-        "id": id.uuidString,
-        "description": description,
-        "location": location,
-        "image": imageURL.absoluteString
-    ].compactMapValues{$0}
-    
-    return (model, json)
-}
-private func makeJSON(_ items: [[String: Any]]) -> Data{
-    let json = [
-        "items": items
-    ]
-    return try! JSONSerialization.data(withJSONObject: json)
+    // MARK: - Helpers
+    private func makeSUT(url: URL = URL(string: "https://url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (RemoteFeedLoader, HTTPClientSpy){
+        let client = HTTPClientSpy()
+        let sut = RemoteFeedLoader(url: url, client: client)
+        trackMemoryLeaks(instance: client, file: file, line: line)
+        trackMemoryLeaks(instance: sut, file: file, line: line)
+        return (sut, client)
+    }
+    private func trackMemoryLeaks(instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocted. Potential memory leak.", file: file, line: line)
+        }
+    }
+    private func expect(_ sut: RemoteFeedLoader, with result: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line){
+        var capturedResults = [RemoteFeedLoader.Result]()
+        sut.load { capturedResults.append($0)}
+        
+        action()
+        
+        XCTAssertEqual(capturedResults, [result], file: file, line: line)
+    }
+    private func makeFeedItem(id: UUID,
+                         description: String? = nil,
+                         location: String? = nil,
+                         imageURL: URL) -> (model: FeedItem, json: [String: Any]){
+        let model = FeedItem(id: id,
+                             description: description,
+                             location: location,
+                             imageURL: imageURL)
+        let json = [
+            "id": id.uuidString,
+            "description": description,
+            "location": location,
+            "image": imageURL.absoluteString
+        ].compactMapValues{$0}
+        
+        return (model, json)
+    }
+    private func makeJSON(_ items: [[String: Any]]) -> Data{
+        let json = [
+            "items": items
+        ]
+        return try! JSONSerialization.data(withJSONObject: json)
+    }
 }
 
 // MARK: - Spy
@@ -156,4 +163,3 @@ private class HTTPClientSpy: HTTPClient{
         messages[index].completion(.success(data, response))
     }
 }
-
