@@ -34,7 +34,7 @@ class RemoteFeedLoaderTests: XCTestCase{
     func test_load_deliversErrorOnClientError(){
         let (sut, client) = makeSUT()
         
-        expect(sut, with: .failure(RemoteFeedLoader.Error.connectivity)) {
+        expect(sut, with: failure(.connectivity)) {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         }
@@ -45,7 +45,7 @@ class RemoteFeedLoaderTests: XCTestCase{
         
         let errorCodes = [199, 201, 300, 400, 500]
         errorCodes.enumerated().forEach { index, code in
-            expect(sut, with: .failure(RemoteFeedLoader.Error.invalidData)) {
+            expect(sut, with: failure(.invalidData)) {
                 let json = makeJSON([])
                 client.complete(withStatusCode: code, data: json,at: index)
             }
@@ -55,7 +55,7 @@ class RemoteFeedLoaderTests: XCTestCase{
     func test_load_deliversErroron200HttpResponseWithInvalidJson(){
         let (sut, client) = makeSUT()
 
-        expect(sut, with: .failure(RemoteFeedLoader.Error.invalidData)) {
+        expect(sut, with: failure(.invalidData)) {
             let data = Data("invalid data".utf8)
             client.complete(withStatusCode: 200, data: data)
         }
@@ -113,11 +113,17 @@ class RemoteFeedLoaderTests: XCTestCase{
         trackMemoryLeaks(instance: sut, file: file, line: line)
         return (sut, client)
     }
+    
     private func trackMemoryLeaks(instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
         addTeardownBlock { [weak instance] in
             XCTAssertNil(instance, "Instance should have been deallocted. Potential memory leak.", file: file, line: line)
         }
     }
+    
+    private func failure(_ error: RemoteFeedLoader.Error) -> RemoteFeedLoader.Result {
+        return .failure(error)
+    }
+    
     private func expect(_ sut: RemoteFeedLoader, with expectedResult: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line){
         let exp = expectation(description: "Wait for load completion")
         sut.load { receivedResult in
@@ -134,6 +140,7 @@ class RemoteFeedLoaderTests: XCTestCase{
         action()
         wait(for: [exp], timeout: 1.0)
     }
+    
     private func makeFeedItem(id: UUID,
                          description: String? = nil,
                          location: String? = nil,
@@ -151,6 +158,7 @@ class RemoteFeedLoaderTests: XCTestCase{
         
         return (model, json)
     }
+    
     private func makeJSON(_ items: [[String: Any]]) -> Data{
         let json = [
             "items": items
