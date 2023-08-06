@@ -1,6 +1,8 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
+env:
+  DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
 jobs:
   Explore-GitHub-Actions:
     runs-on: macOS-13.2.1
