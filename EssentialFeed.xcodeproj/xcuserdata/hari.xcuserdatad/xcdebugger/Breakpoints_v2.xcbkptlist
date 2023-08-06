@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "285D3E72-5D5F-43AE-B36B-4ED658AC7340"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2ABCC15E-D094-4714-AF0C-6AE58186D56B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EssentialFeedTests/RemoteFeedLoaderTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "get(from:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AFA5F6DB-4837-4552-BB92-2865F247E2E1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EssentialFeedTests/RemoteFeedLoaderTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "test_load_deliversErroron200HttpResponseWithInvalidJson()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AFA5F6DB-4837-4552-BB92-2865F247E2E1 - 84e2b08a4576faa6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EssentialFeedTests.RemoteFeedLoaderTests.test_load_deliversErroron200HttpResponseWithInvalidJson() -&gt; ()"
+                  moduleName = "EssentialFeedTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hari/Desktop/Project_Practice/EssentialFeed/EssentialFeedTests/RemoteFeedLoaderTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "AFA5F6DB-4837-4552-BB92-2865F247E2E1 - 7262e6a614733235"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in EssentialFeedTests.RemoteFeedLoaderTests.test_load_deliversErroron200HttpResponseWithInvalidJson() -&gt; ()"
+                  moduleName = "EssentialFeedTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hari/Desktop/Project_Practice/EssentialFeed/EssentialFeedTests/RemoteFeedLoaderTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
