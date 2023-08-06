@@ -13,5 +13,5 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Force Xcode 14.3
-        run: sudo xcode-select -switch /Users/Applications/Xcode.app/Contents/Developer
+        run: sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
       - run: xcodebuild clean build test -project /Users/hari/Desktop/Project_Practice/EssentialFeed/EssentialFeed.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
