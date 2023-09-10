@@ -1,15 +1,15 @@
 //
-//  FeedItem.swift
+//  LocalFeedItem.swift
 //  EssentialFeed
 //
-//  Created by Hari on 27/05/23.
+//  Created by Hari on 10/09/23.
 //
 
 import Foundation
 
-public struct FeedItem: Equatable{
+public struct LocalFeedImage: Equatable{
     let id: UUID
     let description: String?
     let location: String?
-    let imageURL: URL
+    let url: URL
 }
