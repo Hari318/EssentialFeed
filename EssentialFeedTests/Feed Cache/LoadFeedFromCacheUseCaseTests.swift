@@ -24,6 +24,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
     func test_load_failsOnRetrievalError() {
         let (sut, store) = makeSUT()
         let retrievalError = anyError()
+        
         expect(sut, toCompleteWith: .failure(retrievalError)) {
             store.completeRetrieval(with: retrievalError)
         }
@@ -31,6 +32,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
     
     func test_load_deliversNoImagesOnEmptyCache() {
         let (sut, store) = makeSUT()
+        
         expect(sut, toCompleteWith: .success([])) {
             store.completeRetrievalWithEmptyCache()
         }
@@ -41,6 +43,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let fixedCurrentDate = Date()
         let lessThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: 1)
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate } )
+        
         expect(sut, toCompleteWith: .success(feed.models)) {
             store.completeRetrieval(with: feed.local, timeeStamp: lessThanSevenDaysOldTimestamp)
         }
@@ -51,6 +54,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let fixedCurrentDate = Date()
         let sevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7)
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate } )
+        
         expect(sut, toCompleteWith: .success([])) {
             store.completeRetrieval(with: feed.local, timeeStamp: sevenDaysOldTimestamp)
         }
@@ -61,19 +65,20 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let fixedCurrentDate = Date()
         let moreThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: -1)
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate } )
+        
         expect(sut, toCompleteWith: .success([])) {
             store.completeRetrieval(with: feed.local, timeeStamp: moreThanSevenDaysOldTimestamp)
         }
     }
     
-    func test_load_deletesCacheOnRetrievalError() {
+    func test_load_hasNoSideEffectsOnRetrievalError() {
         let (sut, store) = makeSUT()
         
         sut.load{ _ in }
         
         store.completeRetrieval(with: anyError())
         
-        XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
+        XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
     func test_load_doesNotDeletesCacheOnEmptyCache() {
