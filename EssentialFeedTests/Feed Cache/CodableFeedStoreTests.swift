@@ -139,6 +139,6 @@ class CodableFeedStoreTests: XCTestCase {
     }
     
     private func storeURL() -> URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appending(path: "image-feed.store")
+        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.appending(path: "\(type(of: self)).store")
     }
 }
