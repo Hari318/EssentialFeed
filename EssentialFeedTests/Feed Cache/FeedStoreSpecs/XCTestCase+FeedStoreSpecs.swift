@@ -10,6 +10,86 @@ import XCTest
 
 extension FeedStoreSpecs where Self: XCTestCase {
    
+    func assertThatRetrieveDeliversEmptyOnEmptyCache(_ sut: FeedStore) {
+        expect(sut, toRetrieve: .empty)
+    }
+    
+    func assertThatRetrieveHasNoSideEffectsOnEmptyCache(_ sut: FeedStore) {
+        expect(sut, toRetrieveTwice: .empty)
+    }
+    
+    func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(_ sut: FeedStore) {
+        let feed = uniqueImageFeed().local
+        let timeStamp = Date()
+        
+        insert((feed, timeStamp), to: sut)
+        
+        expect(sut, toRetrieve: .found(feed: feed, timestamp: timeStamp))
+    }
+    
+    func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(_ sut: FeedStore) {
+        let feed = uniqueImageFeed().local
+        let timeStamp = Date()
+        
+        insert((feed, timeStamp), to: sut)
+        
+        expect(sut, toRetrieveTwice: .found(feed: feed, timestamp: timeStamp))
+    }
+    
+    func assertThatInsertDeliversNoErrorsOnEmptyCache(_ sut: FeedStore) {
+        let insertionError = insert((uniqueImageFeed().local, Date()), to: sut)
+        
+        XCTAssertNil(insertionError, "Expected to insert cache successfully")
+    }
+    
+    func assertThatInsertDeliversNoErrorsOnNonEmptyCache(_ sut: FeedStore) {
+        insert((uniqueImageFeed().local, Date()), to: sut)
+        
+        let insertionError = insert((uniqueImageFeed().local, Date()), to: sut)
+        
+        XCTAssertNil(insertionError, "Expected to override cache successfully")
+    }
+    
+    func assertThatInsertOverridesPreviouslyInsertedCacheValues(_ sut: FeedStore) {
+        let firstInsertionError = insert((uniqueImageFeed().local, Date()), to: sut)
+        XCTAssertNil(firstInsertionError, "Expected to insert cache successfully")
+        
+        let latestFeed = uniqueImageFeed().local
+        let latestTimeStamp = Date()
+        let latestInsertionError = insert((latestFeed, latestTimeStamp), to: sut)
+        XCTAssertNil(latestInsertionError, "Expected to override cache successfully")
+    }
+    
+    func  assertThatDeleteDeliversNoErrorsOnEmptyCache(_ sut: FeedStore) {
+        deleteCache(from: sut)
+        
+        expect(sut, toRetrieve: .empty)
+    }
+    
+    func assertThatDeleteHasNoSideEffectsOnEmptyCache(_ sut: FeedStore) {
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(deletionError, "Expected empty cache deletion to succeed")
+        expect(sut, toRetrieve: .empty)
+    }
+    
+    func assertThatDeleteDeliversNoErrorsOnNonEmptyCache(_ sut: FeedStore) {
+        insert((uniqueImageFeed().local, Date()), to: sut)
+        
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
+    }
+    
+    func assertThatDeleteEmptiesPreviouslyInsertedCache(_ sut: FeedStore) {
+        insert((uniqueImageFeed().local, Date()), to: sut)
+        
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
+        expect(sut, toRetrieve: .empty)
+    }
+    
     func assertThatSideEffectsRunSerially(on sut: FeedStore) {
         var completedOperationsInOrder = [XCTestExpectation]()
         
