@@ -9,50 +9,7 @@ import XCTest
 @testable import EssentialFeed
 
 extension FeedStoreSpecs where Self: XCTestCase {
-    
-    func  assertThatDeleteDeliversNoErrorsOnEmptyCache(_ sut: FeedStore) {
-        deleteCache(from: sut)
-        
-        expect(sut, toRetrieve: .empty)
-    }
-    
-    func assertThatDeleteHasNoSideEffectsOnEmptyCache(_ sut: FeedStore) {
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNil(deletionError, "Expected empty cache deletion to succeed")
-        expect(sut, toRetrieve: .empty)
-    }
-    
-    func assertThatDeleteDeliversNoErrorsOnNonEmptyCache(_ sut: FeedStore) {
-        insert((uniqueImageFeed().local, Date()), to: sut)
-        
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
-    }
-    
-    func assertThatDeleteEmptiesPreviouslyInsertedCache(_ sut: FeedStore) {
-        insert((uniqueImageFeed().local, Date()), to: sut)
-        
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
-        expect(sut, toRetrieve: .empty)
-    }
-    
-    func assertThatDeleteDeliversErrorOnDeletionError(_ sut: FeedStore) {
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
-        expect(sut, toRetrieve: .empty)
-    }
-    
-    func assertThatDeleteHasNoSideEffectsOnDeletionError(_ sut: FeedStore) {
-        deleteCache(from: sut)
-        
-        expect(sut, toRetrieve: .empty)
-    }
-    
+   
     func assertThatSideEffectsRunSerially(on sut: FeedStore) {
         var completedOperationsInOrder = [XCTestExpectation]()
         
@@ -120,9 +77,9 @@ extension FeedStoreSpecs where Self: XCTestCase {
             case (.empty, .empty), (.failure, .failure):
                 break
                 
-            case let (.found(expected), .found(retrieved)):
-                XCTAssertEqual(expected.feed, retrieved.feed)
-                XCTAssertEqual(expected.timestamp, retrieved.timestamp)
+            case let (.found(expectedFeed, expectedTimeStamp), .found(retrievedFeed, retrievedTimeStamp)):
+                XCTAssertEqual(expectedFeed, retrievedFeed)
+                XCTAssertEqual(expectedTimeStamp, retrievedTimeStamp)
                 
             default:
                 XCTFail("Expected to retrieve \(expectedResult) but got \(retrievedResult) instead", file: file, line: line)
