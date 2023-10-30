@@ -28,15 +28,7 @@ public final class CoreDataFeedStore: FeedStore {
             do {
                 let managedCache = ManagedCache(context: context)
                 managedCache.timestamp = timeStamp
-                managedCache.feed = NSOrderedSet(array: feed.map { local in
-                    let managedImage = ManagedFeedImage(context: context)
-                    managedImage.id = local.id
-                    managedImage.imageDescription = local.description
-                    managedImage.location = local.location
-                    managedImage.url = local.url
-                    
-                    return managedImage
-                })
+                managedCache.feed = ManagedFeedImage.images(from: feed, in: context)
                 
                 try context.save()
                 completion(nil)
@@ -50,9 +42,7 @@ public final class CoreDataFeedStore: FeedStore {
         let context = self.context
         context.perform {
             do {
-                let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
-                request.returnsObjectsAsFaults = false
-                if let cache = try context.fetch(request).first {
+                if let cache = try ManagedCache.find(in: context) {
                     completion(.found(feed: cache.localFeed,
                                       timestamp: cache.timestamp))
                 } else {
@@ -99,6 +89,12 @@ private extension NSPersistentContainer {
 private class ManagedCache: NSManagedObject {
     @NSManaged var timestamp: Date
     @NSManaged var feed: NSOrderedSet
+    
+    static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
+        let request = NSFetchRequest<ManagedCache>(entityName: entity().name!)
+        request.returnsObjectsAsFaults = false
+        return try context.fetch(request).first
+    }
     
     var localFeed: [LocalFeedImage] {
         return feed.compactMap {($0 as? ManagedFeedImage)?.local }
