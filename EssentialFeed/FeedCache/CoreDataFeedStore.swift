@@ -23,11 +23,50 @@ public final class CoreDataFeedStore: FeedStore {
     }
     
     public func insert(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
-        
+        let context = self.context
+        context.perform {
+            do {
+                let managedCache = ManagedCache(context: context)
+                managedCache.timestamp = timeStamp
+                managedCache.feed = NSOrderedSet(array: feed.map { local in
+                    let managedImage = ManagedFeedImage(context: context)
+                    managedImage.id = local.id
+                    managedImage.imageDescription = local.description
+                    managedImage.location = local.location
+                    managedImage.url = local.url
+                    
+                    return managedImage
+                })
+                
+                try context.save()
+                completion(nil)
+            } catch {
+                completion(error)
+            }
+        }
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        completion(.empty)
+        let context = self.context
+        context.perform {
+            do {
+                let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
+                request.returnsObjectsAsFaults = false
+                if let cache = try context.fetch(request).first {
+                    completion(.found(feed: cache.feed
+                        .compactMap {($0 as? ManagedFeedImage) }
+                        .map {
+                            LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url)
+                            
+                        },
+                                      timestamp: cache.timestamp))
+                } else {
+                    completion(.empty)
+                }
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
 }
 
@@ -61,16 +100,17 @@ private extension NSPersistentContainer {
      }
  }
 
-
+@objc(ManagedCache)
 private class ManagedCache: NSManagedObject {
-     @NSManaged var timestamp: Date
-     @NSManaged var feed: NSOrderedSet
- }
+    @NSManaged var timestamp: Date
+    @NSManaged var feed: NSOrderedSet
+}
 
- private class ManagedFeedImage: NSManagedObject {
-     @NSManaged var id: UUID
-     @NSManaged var imageDescription: String?
-     @NSManaged var location: String?
-     @NSManaged var url: URL
-     @NSManaged var cache: ManagedCache
- }
+@objc(ManagedFeedImage)
+private class ManagedFeedImage: NSManagedObject {
+    @NSManaged var id: UUID
+    @NSManaged var imageDescription: String?
+    @NSManaged var location: String?
+    @NSManaged var url: URL
+    @NSManaged var cache: ManagedCache
+}
