@@ -11,11 +11,11 @@ import XCTest
 extension FeedStoreSpecs where Self: XCTestCase {
    
     func assertThatRetrieveDeliversEmptyOnEmptyCache(_ sut: FeedStore) {
-        expect(sut, toRetrieve: .success(.empty))
+        expect(sut, toRetrieve: .success(.none))
     }
     
     func assertThatRetrieveHasNoSideEffectsOnEmptyCache(_ sut: FeedStore) {
-        expect(sut, toRetrieveTwice: .success(.empty))
+        expect(sut, toRetrieveTwice: .success(.none))
     }
     
     func assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(_ sut: FeedStore) {
@@ -24,7 +24,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
         
         insert((feed, timeStamp), to: sut)
         
-        expect(sut, toRetrieve: .success(.found(feed: feed, timestamp: timeStamp)))
+        expect(sut, toRetrieve: .success(CachedFeed(feed: feed, timestamp: timeStamp)))
     }
     
     func assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(_ sut: FeedStore) {
@@ -33,7 +33,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
         
         insert((feed, timeStamp), to: sut)
         
-        expect(sut, toRetrieveTwice: .success(.found(feed: feed, timestamp: timeStamp)))
+        expect(sut, toRetrieveTwice: .success(CachedFeed(feed: feed, timestamp: timeStamp)))
     }
     
     func assertThatInsertDeliversNoErrorsOnEmptyCache(_ sut: FeedStore) {
@@ -63,14 +63,14 @@ extension FeedStoreSpecs where Self: XCTestCase {
     func  assertThatDeleteDeliversNoErrorsOnEmptyCache(_ sut: FeedStore) {
         deleteCache(from: sut)
         
-        expect(sut, toRetrieve: .success(.empty))
+        expect(sut, toRetrieve: .success(.none))
     }
     
     func assertThatDeleteHasNoSideEffectsOnEmptyCache(_ sut: FeedStore) {
         let deletionError = deleteCache(from: sut)
         
         XCTAssertNil(deletionError, "Expected empty cache deletion to succeed")
-        expect(sut, toRetrieve: .success(.empty))
+        expect(sut, toRetrieve: .success(.none))
     }
     
     func assertThatDeleteDeliversNoErrorsOnNonEmptyCache(_ sut: FeedStore) {
@@ -87,7 +87,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
         let deletionError = deleteCache(from: sut)
         
         XCTAssertNil(deletionError, "Expected non-empty cache deletion to succeed")
-        expect(sut, toRetrieve: .success(.empty))
+        expect(sut, toRetrieve: .success(.none))
     }
     
     func assertThatSideEffectsRunSerially(on sut: FeedStore) {
@@ -154,12 +154,12 @@ extension FeedStoreSpecs where Self: XCTestCase {
         
         sut.retrieve { retrievedResult in
             switch (expectedResult, retrievedResult) {
-            case (.success(.empty), .success(.empty)), (.failure, .failure):
+            case (.success(.none), .success(.none)), (.failure, .failure):
                 break
                 
-            case let (.success(.found(expectedFeed, expectedTimeStamp)), .success(.found(retrievedFeed, retrievedTimeStamp))):
-                XCTAssertEqual(expectedFeed, retrievedFeed)
-                XCTAssertEqual(expectedTimeStamp, retrievedTimeStamp)
+            case let (.success(.some(expectedResult)), .success(.some(retrievedResult))):
+                XCTAssertEqual(expectedResult.feed, retrievedResult.feed)
+                XCTAssertEqual(expectedResult.timestamp, retrievedResult.timestamp)
                 
             default:
                 XCTFail("Expected to retrieve \(expectedResult) but got \(retrievedResult) instead", file: file, line: line)

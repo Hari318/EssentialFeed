@@ -14,13 +14,13 @@ extension FailableDeleteFeedStoreSpecs where Self: XCTestCase {
         let deletionError = deleteCache(from: sut)
         
         XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
-        expect(sut, toRetrieve: .success(.empty))
+        expect(sut, toRetrieve: .success(.none))
     }
 
     func assertThatDeleteHasNoSideEffectsOnDeletionError(_ sut: FeedStore) {
         deleteCache(from: sut)
         
-        expect(sut, toRetrieve: .success(.empty))
+        expect(sut, toRetrieve: .success(.none))
     }
     
 }
