@@ -28,20 +28,20 @@ class FeedStoreSpy: FeedStore {
     }
     
     func completeDeletion(with error: NSError, at index: Int = 0) {
-        deletionsCompletions[index](error)
+        deletionsCompletions[index](.failure(error))
     }
     func completeDeletionSuccessfully(at index: Int = 0) {
-        deletionsCompletions[index](nil)
+        deletionsCompletions[index](.success(()))
     }
     func insert(_ feed: [LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
         insertionsCompletions.append(completion)
         receivedMessages.append(.insert(feed, timeStamp))
     }
     func completeInsertion(with error: NSError, at index: Int = 0) {
-        insertionsCompletions[index](error)
+        insertionsCompletions[index](.failure(error))
     }
     func completeInsertionSuccessfully(at index: Int = 0) {
-        insertionsCompletions[index](nil)
+        insertionsCompletions[index](.success(()))
     }
     func retrieve(completion: @escaping RetrievalCompletion) {
         retrievalCompletions.append(completion)
