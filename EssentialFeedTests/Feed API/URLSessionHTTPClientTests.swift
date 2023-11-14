@@ -38,7 +38,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     func test_getFromURL_failsOnRequestError() {
-        let url = URL(string: "https://one.com")!
+        let _ = URL(string: "https://one.com")!
         let requestError = NSError(domain: "Any error", code: 1)
         let receivedError = resultErrorFor(data: nil, response: nil, error: requestError) as? NSError
         
@@ -84,7 +84,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         return URL(string: "https://one.com")!
     }
     private func anyData() -> Data{
-        return Data(bytes: "any data".utf8)
+        return Data("any data".utf8)
     }
     private func anyError() -> NSError? {
         return NSError(domain: "any error", code: 0)
