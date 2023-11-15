@@ -38,7 +38,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     func test_getFromURL_failsOnRequestError() {
-        let url = URL(string: "https://one.com")!
+        let _ = URL(string: "https://one.com")!
         let requestError = NSError(domain: "Any error", code: 1)
         let receivedError = resultErrorFor(data: nil, response: nil, error: requestError) as? NSError
         
@@ -84,7 +84,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         return URL(string: "https://one.com")!
     }
     private func anyData() -> Data{
-        return Data(bytes: "any data".utf8)
+        return Data("any data".utf8)
     }
     private func anyError() -> NSError? {
         return NSError(domain: "any error", code: 0)
@@ -112,18 +112,18 @@ class URLSessionHTTPClientTests: XCTestCase {
         let receivedResult = resultFor(data: data, response: response, error: error, file: file, line: line)
 
         switch receivedResult {
-        case let .success(data, error):
+        case let .success((data, error)):
             return (data, error)
         default:
             XCTFail("Expected success got \(receivedResult) instead", file: file, line: line)
             return nil
         }
     }
-    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> HTTPClientResult {
+    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> HTTPClient.Result {
         URLProtocolStub.stub(data: data, response: response, error: error)
         let sut = makeSUT(file: file, line: line)
         let expectaion = expectation(description: "Wait for completion")
-        var receivedResult: HTTPClientResult!
+        var receivedResult: HTTPClient.Result!
         
         sut.get(from: anyURL()) { result in
             receivedResult = result

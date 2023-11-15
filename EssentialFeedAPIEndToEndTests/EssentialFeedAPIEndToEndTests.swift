@@ -12,10 +12,10 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     func test_endToEndTestServerGETFeedResult_matchesFixedTestAccountData() {    
         switch getFeedResult() {
-        case let .success(items)?:
-            XCTAssertEqual(items.count, 8, "Expected 8 items in test acc feed")
+        case let .success(imageFeed)?:
+            XCTAssertEqual(imageFeed.count, 8, "Expected 8 image in test acc image feed")
             
-            items.enumerated().forEach { (index, item) in
+            imageFeed.enumerated().forEach { (index, item) in
                 XCTAssertEqual(item, expectedItem(at: index))
             }
         case let .failure(error):
@@ -26,14 +26,14 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
     }
     
 //    MARK: - Helpers
-    private func getFeedResult(file: StaticString = #filePath, line: UInt = #line) -> LoadFeedResult? {
+    private func getFeedResult(file: StaticString = #filePath, line: UInt = #line) -> FeedLoader.Result? {
         let testServerURL = URL(string: "https://static1.squarespace.com/static/5891c5b8d1758ec68ef5dbc2/t/5c52cdd0b8a045df091d2fff/1548930512083/feed-case-study-test-api-feed.json")!
         let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let loader = RemoteFeedLoader(url: testServerURL, client: client)
         trackMemoryLeaks(instance: client, file: file, line: line)
         trackMemoryLeaks(instance: client, file: file, line: line)
         let exp = expectation(description: "Wait for completion")
-        var receivedResult: LoadFeedResult?
+        var receivedResult: FeedLoader.Result?
         loader.load { result in
             receivedResult = result
             exp.fulfill()
@@ -41,11 +41,11 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
         wait(for: [exp], timeout: 5.0)
         return receivedResult
     }
-    private func expectedItem(at index: Int) -> FeedItem {
-        return FeedItem(id: id(at: index),
+    private func expectedItem(at index: Int) -> FeedImage {
+        return FeedImage(id: id(at: index),
                         description: description(at: index),
                         location: location(at: index),
-                        imageURL: imageURL(at: index))
+                        url: imageURL(at: index))
     }
     
     private func id(at index: Int) -> UUID {
