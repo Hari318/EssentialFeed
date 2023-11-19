@@ -74,8 +74,7 @@ final class FeedViewControllerTests: XCTestCase {
         sut.replaceRefreshControlWithFakeiOS17Support()
         XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
         
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
+        sut.simulateAppearance()
         XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
     }
     
@@ -91,11 +90,19 @@ final class FeedViewControllerTests: XCTestCase {
     func test_pullToRefresh_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateAppearance()
         
         XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
     }
     
+    func test_pullToRefresh_hidesLoadingIndicator() {
+        let (sut, loader) = makeSUT()
+        
+        sut.simulateAppearance()
+        loader.completeFeedLoading()
+        
+        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+    }
     
     // MARK: - Helpers
     
@@ -141,6 +148,16 @@ private class FakeRefreshControl: UIRefreshControl {
 }
 
 private extension FeedViewController {
+    
+    func simulateAppearance() {
+        if !isViewLoaded {
+            loadViewIfNeeded()
+            replaceRefreshControlWithFakeiOS17Support()
+        }
+        beginAppearanceTransition(true, animated: false)
+        endAppearanceTransition()
+    }
+    
     func replaceRefreshControlWithFakeiOS17Support() {
         let fake = FakeRefreshControl()
         refreshControl?.allTargets.forEach{ target in
