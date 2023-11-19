@@ -56,14 +56,14 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
     }
     
-    func test_pullToRefresh_loadsFeed() {
+    func test_userInitiatedFeedReload_loadsFeed() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeed()
         XCTAssertEqual(loader.loadCallCount, 2)
         
-        sut.refreshControl?.simulatePullToRefresh()
+        sut.simulateUserInitiatedFeed()
         XCTAssertEqual(loader.loadCallCount, 3)
     }
     
@@ -87,7 +87,7 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
     }
     
-    func test_pullToRefresh_showsLoadingIndicator() {
+    func test_userInitiatedFeedReload_showsLoadingIndicator() {
         let (sut, _) = makeSUT()
         
         sut.simulateAppearance()
@@ -95,7 +95,7 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
     }
     
-    func test_pullToRefresh_hidesLoadingIndicator() {
+    func test_userInitiatedFeedReload_hidesLoadingIndicator() {
         let (sut, loader) = makeSUT()
         
         sut.simulateAppearance()
@@ -148,6 +148,9 @@ private class FakeRefreshControl: UIRefreshControl {
 }
 
 private extension FeedViewController {
+    func simulateUserInitiatedFeed() {
+        refreshControl?.simulatePullToRefresh()
+    }
     
     func simulateAppearance() {
         if !isViewLoaded {
