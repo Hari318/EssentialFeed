@@ -59,6 +59,7 @@
 		47E77F1E2B09D6FA00336EB2 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4717CEA32A767D8200C798B6 /* XCTestCase+MemoryLeakTracking.swift */; };
 		47E77F202B0A54AA00336EB2 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E77F1F2B0A54AA00336EB2 /* FeedViewController.swift */; };
 		47E77F222B0B3E5300336EB2 /* FeedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E77F212B0B3E5300336EB2 /* FeedImageCell.swift */; };
+		47E77F242B0CEF9500336EB2 /* UIView+Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E77F232B0CEF9500336EB2 /* UIView+Shimmering.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +168,7 @@
 		47E77F162B091BA200336EB2 /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
 		47E77F1F2B0A54AA00336EB2 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		47E77F212B0B3E5300336EB2 /* FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
+		47E77F232B0CEF9500336EB2 /* UIView+Shimmering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +253,7 @@
 			children = (
 				47E77F1F2B0A54AA00336EB2 /* FeedViewController.swift */,
 				47E77F212B0B3E5300336EB2 /* FeedImageCell.swift */,
+				47E77F232B0CEF9500336EB2 /* UIView+Shimmering.swift */,
 			);
 			path = EssentialFeediOS;
 			sourceTree = "<group>";
@@ -676,6 +679,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47E77F242B0CEF9500336EB2 /* UIView+Shimmering.swift in Sources */,
 				47E77F202B0A54AA00336EB2 /* FeedViewController.swift in Sources */,
 				47E77F222B0B3E5300336EB2 /* FeedImageCell.swift in Sources */,
 			);
