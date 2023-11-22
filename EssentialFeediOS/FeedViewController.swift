@@ -1,9 +1,6 @@
-//
 //  FeedViewController.swift
-//  EssentialFeediOS
 //
 //  Created by Hari on 19/11/23.
-//
 
 import UIKit
 import EssentialFeed
@@ -14,6 +11,7 @@ public protocol FeedImageDataLoaderTask {
 
 public protocol FeedImageDataLoader {
     typealias Result = Swift.Result<Data, Error>
+    
     func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> FeedImageDataLoaderTask
 }
 
@@ -21,8 +19,8 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     private var feedLoader: FeedLoader?
     private var imageLoader: FeedImageDataLoader?
     private var tasks = [IndexPath: FeedImageDataLoaderTask]()
-    
     private var tableModel = [FeedImage]()
+    
     var isViewAppeared = false
     
     public convenience init(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) {
