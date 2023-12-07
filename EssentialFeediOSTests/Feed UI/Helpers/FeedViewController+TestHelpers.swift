@@ -10,6 +10,10 @@ import UIKit
 
 extension FeedViewController {
     
+    var errorMessage: String? {
+        return errorView?.message
+    }
+    
     var isShowingLoadingIndicator: Bool {
         refreshControl?.isRefreshing == true
     }
@@ -52,6 +56,10 @@ extension FeedViewController {
         refreshControl?.simulatePullToRefresh()
     }
     
+    func simulateTapOnErrorMessage() {
+        errorView?.button.simulateTap()
+    }
+    
     func numberOfRenderedFeedImageViews() -> Int{
         return tableView.numberOfRows(inSection: feedImageSection)
     }
@@ -65,21 +73,25 @@ extension FeedViewController {
     func simulateAppearance() {
         if !isViewLoaded {
             loadViewIfNeeded()
-            replaceRefreshControlWithFakeiOS17Support()
+            prepareForFirstAppearance()
         }
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
     }
     
+    private func prepareForFirstAppearance() {
+        replaceRefreshControlWithFakeiOS17Support()
+    }
+    
     func replaceRefreshControlWithFakeiOS17Support() {
-        let fake = FakeRefreshControl()
+        let spyRefreshControl = FakeRefreshControl()
         refreshControl?.allTargets.forEach{ target in
             refreshControl?.actions(forTarget: target, forControlEvent:
                     .valueChanged)?.forEach { action in
-                        fake.addTarget(target, action: Selector(action), for: .valueChanged)
+                        spyRefreshControl.addTarget(target, action: Selector(action), for: .valueChanged)
             }
         }
-        refreshControl = fake
+        refreshControl = spyRefreshControl
     }
 }
 

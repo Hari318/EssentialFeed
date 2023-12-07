@@ -8,7 +8,10 @@ protocol FeedViewControllerDelegate {
     func didRequestFeedRefresh()
 }
 
-final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching, FeedLoadingView {
+final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching, FeedLoadingView, FeedErrorView {
+    
+    @IBOutlet private(set) public var errorView: ErrorView?
+    
     var delegate: FeedViewControllerDelegate?
     
     var tableModel = [FeedImageCellController]() {
@@ -17,18 +20,19 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
         }
     }
     
-    var isViewAppeared = false
-    
+    private var onViewIsAppearing: (() -> Void)?
+
     public override func viewDidLoad() {
         super.viewDidLoad()
-        refresh()
+        onViewIsAppearing = { [weak self] in
+            self?.refresh()
+            self?.onViewIsAppearing = nil
+        }
     }
     
     public override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
-        if !isViewAppeared {
-            isViewAppeared = true
-        }
+        onViewIsAppearing?()
     }
     
     @IBAction private func refresh() {
@@ -40,6 +44,14 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
             refreshControl?.beginRefreshing()
         } else {
             refreshControl?.endRefreshing()
+        }
+    }
+    
+    func display(_ viewModel: FeedErrorViewModel) {
+        if let error = viewModel.message {
+            errorView?.show(message: error)
+        } else {
+            errorView?.hideMessage()
         }
     }
     
