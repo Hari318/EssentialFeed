@@ -37,7 +37,6 @@ class FeedPresenterTests: XCTestCase {
     
     func test_didFinishLoadingFeedWithError_displayLocalizedErrorMessageAndStopsLoading() {
         let (sut, view) = makeSUT()
-        let feed = uniqueImageFeed().models
         
         sut.didFinishLoadingFeed(with: anyError())
         
