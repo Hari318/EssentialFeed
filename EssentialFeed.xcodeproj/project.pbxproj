@@ -70,6 +70,8 @@
 		479C3A472AAE196A0005DAF8 /* RemoteFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479C3A462AAE196A0005DAF8 /* RemoteFeedItem.swift */; };
 		479C3A492AAE19E10005DAF8 /* LocalFeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479C3A482AAE19E10005DAF8 /* LocalFeedImage.swift */; };
 		479CC71A2B2D7E1200361881 /* LocalFeedImageDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CC7192B2D7E1200361881 /* LocalFeedImageDataLoaderTests.swift */; };
+		479CC71C2B31DAA400361881 /* FeedImageDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CC71B2B31DAA400361881 /* FeedImageDataStore.swift */; };
+		479CC71E2B31DAE400361881 /* LocalFeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CC71D2B31DAE400361881 /* LocalFeedImageDataLoader.swift */; };
 		47A774752A225CC000FE88A7 /* LoadFeedFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A774742A225CC000FE88A7 /* LoadFeedFromRemoteUseCaseTests.swift */; };
 		47A774782A23325000FE88A7 /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A774772A23325000FE88A7 /* RemoteFeedLoader.swift */; };
 		47AA3F002AEFF8B600BBF779 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA3EFF2AEFF8B600BBF779 /* CoreDataHelpers.swift */; };
@@ -220,6 +222,8 @@
 		479C3A462AAE196A0005DAF8 /* RemoteFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedItem.swift; sourceTree = "<group>"; };
 		479C3A482AAE19E10005DAF8 /* LocalFeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImage.swift; sourceTree = "<group>"; };
 		479CC7192B2D7E1200361881 /* LocalFeedImageDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImageDataLoaderTests.swift; sourceTree = "<group>"; };
+		479CC71B2B31DAA400361881 /* FeedImageDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataStore.swift; sourceTree = "<group>"; };
+		479CC71D2B31DAE400361881 /* LocalFeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImageDataLoader.swift; sourceTree = "<group>"; };
 		47A774742A225CC000FE88A7 /* LoadFeedFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFeedFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		47A774772A23325000FE88A7 /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 		47AA3EFF2AEFF8B600BBF779 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
@@ -547,6 +551,8 @@
 				479C3A442AADADDF0005DAF8 /* FeedStore.swift */,
 				479C3A482AAE19E10005DAF8 /* LocalFeedImage.swift */,
 				47AE9E422AD146620006821C /* FeedCachePolicy.swift */,
+				479CC71B2B31DAA400361881 /* FeedImageDataStore.swift */,
+				479CC71D2B31DAE400361881 /* LocalFeedImageDataLoader.swift */,
 			);
 			path = FeedCache;
 			sourceTree = "<group>";
@@ -905,6 +911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				479CC71E2B31DAE400361881 /* LocalFeedImageDataLoader.swift in Sources */,
 				479C3A492AAE19E10005DAF8 /* LocalFeedImage.swift in Sources */,
 				475E560F2AE90EDD00AD452F /* FeedStore.xcdatamodeld in Sources */,
 				479C3A452AADADDF0005DAF8 /* FeedStore.swift in Sources */,
@@ -925,6 +932,7 @@
 				4796C6A32A21D99F00A61190 /* FeedImage.swift in Sources */,
 				476992D42B2B5CF4001E6477 /* RemoteFeedImageDataLoader.swift in Sources */,
 				47AA3F042AEFFA5200BBF779 /* ManagedFeedImage.swift in Sources */,
+				479CC71C2B31DAA400361881 /* FeedImageDataStore.swift in Sources */,
 				479C3A432AADADCF0005DAF8 /* LocalFeedLoader.swift in Sources */,
 				473B70BB2B28AE370098D6FB /* FeedImageDataLoader.swift in Sources */,
 				476992D72B2CA2BC001E6477 /* HTTPURLResponse+StatusCode.swift in Sources */,
