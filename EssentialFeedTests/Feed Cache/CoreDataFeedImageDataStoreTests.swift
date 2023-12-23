@@ -48,6 +48,24 @@ class CoreDataFeedImageDataStoreTests: XCTestCase {
         expect(sut, toCompleteRetrievalWith: found(lastStoredData), for: url)
     }
     
+    func test_sideEffects_runSerially() {
+        let sut = makeSUT()
+        let url = anyURL()
+        
+        let op1 = expectation(description: "Operation 1")
+        sut.insert([localImage(url: url)], timeStamp: Date()) { _ in
+            op1.fulfill()
+        }
+        
+        let op2 = expectation(description: "Operation 2")
+        sut.insert(anyData(), for: url) { _ in    op2.fulfill() }
+        
+        let op3 = expectation(description: "Operation 3")
+        sut.insert(anyData(), for: url) { _ in op3.fulfill() }
+        
+        wait(for: [op1, op2, op3], timeout: 5.0, enforceOrder: true)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> CoreDataFeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
@@ -77,9 +95,6 @@ class CoreDataFeedImageDataStoreTests: XCTestCase {
             case let (.success(receivedData), .success(expectedData)):
                 XCTAssertEqual(receivedData, expectedData, file: file, line: line)
                 
-//            case let (.failure(receivedError as ), .failure(expectedError)):
-//                XCTAssertEqual(receivedError, expectedError)
-                
             default:
                 XCTFail("Expected result \(expectedResult), got \(receivedResult) instead.", file: file, line: line)
             }
@@ -94,16 +109,20 @@ class CoreDataFeedImageDataStoreTests: XCTestCase {
         sut.insert([image], timeStamp: Date()) { result in
             switch result {
             case let .failure(error):
+                
                 XCTFail("Failed to save \(image) with error \(error)", file: file, line: line)
+                exp.fulfill()
                 
             case .success:
+                
                 sut.insert(data, for: url) { result in
                     if case let Result.failure(error) = result {
                         XCTFail("Failed to insert \(data) with error \(error)", file: file, line: line)
                     }
+                    exp.fulfill()
                 }
+                
             }
-            exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
     }
