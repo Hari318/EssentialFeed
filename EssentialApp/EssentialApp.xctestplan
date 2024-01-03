@@ -9,6 +9,15 @@
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:EssentialApp.xcodeproj",
+          "identifier" : "470D7CDD2B3AC87A00B98223",
+          "name" : "EssentialApp"
+        }
+      ]
+    },
     "targetForVariableExpansion" : {
       "containerPath" : "container:EssentialApp.xcodeproj",
       "identifier" : "470D7CDD2B3AC87A00B98223",
