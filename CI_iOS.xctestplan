@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "7B40EAB0-E6CC-4BA1-A79D-64FE1F183983",
+      "id" : "3F0CCEE2-8C24-48FE-8699-1E6EFDB5E5ED",
       "name" : "Test Scheme Action",
       "options" : {
 
@@ -9,56 +9,42 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : {
-      "targets" : [
-        {
-          "containerPath" : "container:EssentialFeed.xcodeproj",
-          "identifier" : "4796C6862A21D86000A61190",
-          "name" : "EssentialFeed"
-        },
-        {
-          "containerPath" : "container:EssentialFeed.xcodeproj",
-          "identifier" : "47570C972B073BF1008A9A94",
-          "name" : "EssentialFeediOS"
-        }
-      ]
-    },
-    "testExecutionOrdering" : "random"
+    "codeCoverage" : false
   },
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "containerPath" : "container:EssentialApp.xcodeproj",
+        "identifier" : "470D7CF32B3AC87C00B98223",
+        "name" : "EssentialAppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/EssentialFeed.xcodeproj",
         "identifier" : "4717CEE92A7F807B00C798B6",
         "name" : "EssentialFeedAPIEndToEndTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "containerPath" : "container:..\/EssentialFeed.xcodeproj",
         "identifier" : "47AA3F082AF0EAF500BBF779",
         "name" : "EssentialFeedCacheIntegrationTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "containerPath" : "container:..\/EssentialFeed.xcodeproj",
         "identifier" : "4796C6902A21D86000A61190",
         "name" : "EssentialFeedTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "containerPath" : "container:..\/EssentialFeed.xcodeproj",
         "identifier" : "47570C9E2B073BF1008A9A94",
         "name" : "EssentialFeediOSTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:EssentialApp.xcodeproj",
-        "identifier" : "470D7CF32B3AC87C00B98223",
-        "name" : "EssentialAppTests"
       }
     }
   ],

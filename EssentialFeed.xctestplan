@@ -28,6 +28,27 @@
         "identifier" : "4796C6902A21D86000A61190",
         "name" : "EssentialFeedTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "identifier" : "4717CEE92A7F807B00C798B6",
+        "name" : "EssentialFeedAPIEndToEndTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "identifier" : "47AA3F082AF0EAF500BBF779",
+        "name" : "EssentialFeedCacheIntegrationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:EssentialFeed.xcodeproj",
+        "identifier" : "47570C9E2B073BF1008A9A94",
+        "name" : "EssentialFeediOSTests"
+      }
     }
   ],
   "version" : 1
