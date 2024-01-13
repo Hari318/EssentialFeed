@@ -9,7 +9,8 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false
+    "codeCoverage" : false,
+    "testExecutionOrdering" : "random"
   },
   "testTargets" : [
     {
@@ -45,6 +46,13 @@
         "containerPath" : "container:..\/EssentialFeed.xcodeproj",
         "identifier" : "47570C9E2B073BF1008A9A94",
         "name" : "EssentialFeediOSTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:EssentialApp.xcodeproj",
+        "identifier" : "478AE0C32B4EE0F200FC0D52",
+        "name" : "EssentialAppUIAcceptanceTests"
       }
     }
   ],
