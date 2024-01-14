@@ -15,7 +15,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     
     public var delegate: FeedViewControllerDelegate?
     
-    var tableModel = [FeedImageCellController]() {
+    private var tableModel = [FeedImageCellController]() {
         didSet {
                 tableView.reloadData()
         }
