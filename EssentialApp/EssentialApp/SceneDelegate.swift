@@ -13,17 +13,16 @@ import EssentialFeediOS
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-    let localStoreURL = NSPersistentContainer
-        .defaultDirectoryURL()
-        .appending(path: "feed-store.sqlite")
     
     lazy var httpClient: HTTPClient = {
         URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
     }()
     
     lazy var store: FeedStore & FeedImageDataStore = {
-        try! CoreDataFeedStore(storeURL: localStoreURL)
+        try! CoreDataFeedStore(
+            storeURL: NSPersistentContainer
+                .defaultDirectoryURL()
+                .appending(path: "feed-store.sqlite"))
     }()
     
     convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
@@ -57,10 +56,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ))
         
         window?.rootViewController = feedViewController
-    }
-    
-    func makeRemoteClient() -> HTTPClient {
-        return httpClient
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
