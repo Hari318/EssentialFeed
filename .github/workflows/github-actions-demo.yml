@@ -1,4 +1,17 @@
-os: osx
-osx_image: xcode14.3
-language: swift
-script: xcodebuild clean build test -project /Users/hari/Desktop/Project_Practice/EssentialFeed/EssentialFeed.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+env:
+  DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: macOS-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Force Xcode 14.3
+        run: sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+      - run: xcodebuild clean build test -project /Users/hari/Desktop/Project_Practice/EssentialFeed/EssentialFeed.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
