@@ -36,6 +36,12 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
         onViewIsAppearing?()
     }
     
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.sizeTableHeaderToFit()
+    }
+    
     @IBAction private func refresh() {
         delegate?.didRequestFeedRefresh()
     }
@@ -53,11 +59,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     }
     
     public func display(_ viewModel: FeedErrorViewModel) {
-        if let error = viewModel.message {
-            errorView?.show(message: error)
-        } else {
-            errorView?.hideMessage()
-        }
+        errorView?.message = viewModel.message
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

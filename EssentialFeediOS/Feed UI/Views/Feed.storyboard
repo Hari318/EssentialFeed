@@ -19,27 +19,22 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ft-yp-YWX">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX5-JQ-Jwh">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title="Error Label">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="hideMessage" destination="KHX-vR-HhN" eventType="touchUpInside" id="Ra4-Xd-bGZ"/>
-                                    </connections>
-                                </button>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" red="1" green="0.41568627450000001" blue="0.41568627450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="2ft-yp-YWX" firstAttribute="leading" secondItem="KHX-vR-HhN" secondAttribute="leading" id="T9D-2u-UhG"/>
-                                <constraint firstAttribute="bottom" secondItem="2ft-yp-YWX" secondAttribute="bottom" id="U5o-dT-WgZ"/>
-                                <constraint firstItem="2ft-yp-YWX" firstAttribute="top" secondItem="KHX-vR-HhN" secondAttribute="top" id="kZt-6D-hi4"/>
-                                <constraint firstAttribute="trailing" secondItem="2ft-yp-YWX" secondAttribute="trailing" id="xed-If-ALe"/>
+                                <constraint firstAttribute="trailing" secondItem="QX5-JQ-Jwh" secondAttribute="trailing" id="NX0-RI-zG9"/>
+                                <constraint firstAttribute="bottom" secondItem="QX5-JQ-Jwh" secondAttribute="bottom" id="fb8-BJ-cfM"/>
+                                <constraint firstItem="QX5-JQ-Jwh" firstAttribute="leading" secondItem="KHX-vR-HhN" secondAttribute="leading" id="kyx-3t-54n"/>
+                                <constraint firstItem="QX5-JQ-Jwh" firstAttribute="top" secondItem="KHX-vR-HhN" secondAttribute="top" id="sSd-dB-ic1"/>
                             </constraints>
                             <connections>
-                                <outlet property="button" destination="2ft-yp-YWX" id="2lA-nS-3Oz"/>
+                                <outlet property="label" destination="QX5-JQ-Jwh" id="dao-uS-NSt"/>
                             </connections>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="ug8-6l-tmS">
@@ -171,7 +166,7 @@
                         </connections>
                     </refreshControl>
                     <connections>
-                        <outlet property="errorView" destination="KHX-vR-HhN" id="1Oi-cK-DqY"/>
+                        <outlet property="errorView" destination="KHX-vR-HhN" id="6dz-Fa-BmT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KZv-rQ-f6h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
