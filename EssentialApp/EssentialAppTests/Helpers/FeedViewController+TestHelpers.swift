@@ -87,7 +87,12 @@ extension FeedViewController {
     }
     
     private func prepareForFirstAppearance() {
+        setSmallFrameToPreventRenderingCells()
         replaceRefreshControlWithFakeiOS17Support()
+    }
+    
+    private func setSmallFrameToPreventRenderingCells() {
+        tableView.frame = CGRect(x: 0, y: 0, width: 390, height: 1)
     }
     
     func replaceRefreshControlWithFakeiOS17Support() {

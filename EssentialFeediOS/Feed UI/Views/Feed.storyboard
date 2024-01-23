@@ -20,7 +20,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX5-JQ-Jwh">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="34"/>
+                                    <rect key="frame" x="0.0" y="8" width="393" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -29,9 +29,9 @@
                             <color key="backgroundColor" red="1" green="0.41568627450000001" blue="0.41568627450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="QX5-JQ-Jwh" secondAttribute="trailing" id="NX0-RI-zG9"/>
-                                <constraint firstAttribute="bottom" secondItem="QX5-JQ-Jwh" secondAttribute="bottom" id="fb8-BJ-cfM"/>
+                                <constraint firstAttribute="bottom" secondItem="QX5-JQ-Jwh" secondAttribute="bottom" constant="8" id="fb8-BJ-cfM"/>
                                 <constraint firstItem="QX5-JQ-Jwh" firstAttribute="leading" secondItem="KHX-vR-HhN" secondAttribute="leading" id="kyx-3t-54n"/>
-                                <constraint firstItem="QX5-JQ-Jwh" firstAttribute="top" secondItem="KHX-vR-HhN" secondAttribute="top" id="sSd-dB-ic1"/>
+                                <constraint firstItem="QX5-JQ-Jwh" firstAttribute="top" secondItem="KHX-vR-HhN" secondAttribute="top" constant="8" id="sSd-dB-ic1"/>
                             </constraints>
                             <connections>
                                 <outlet property="label" destination="QX5-JQ-Jwh" id="dao-uS-NSt"/>
@@ -175,10 +175,10 @@
     <resources>
         <image name="pin" width="10" height="14.333333015441895"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
