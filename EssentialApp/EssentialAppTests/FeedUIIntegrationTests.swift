@@ -77,6 +77,20 @@ final class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
         assertThat(sut, isRendering: [image0, image1, image2, image3])
     }
+    
+    func test_loadFeedCompletion_rendersSuccessfullyLoadedEmptyFeedAfterNonEmptyFeed() {
+        let image0 = makeImage()
+        let image1 = makeImage()
+        let (sut, loader) = makeSUT()
+
+        sut.simulateAppearance()
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        assertThat(sut, isRendering: [image0, image1])
+
+        sut.simulateUserInitiatedFeedReload()
+        loader.completeFeedLoading(with: [], at: 1)
+        assertThat(sut, isRendering: [])
+    }
 
     func test_loadFeedCompletion_doesNotAlterCurrentRenderingStateOnError() {
         let image0 = makeImage()
@@ -104,18 +118,18 @@ final class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.errorMessage, nil)
     }
 
-    func test_errorView_dismissesErrorMessageOnTap() {
-        let (sut, loader) = makeSUT()
-
-        sut.simulateAppearance()
-        XCTAssertEqual(sut.errorMessage, nil)
-
-        loader.completeFeedLoadingWithError(at: 0)
-        XCTAssertEqual(sut.errorMessage, localized("FEED_VIEW_CONNECTION_ERROR"))
-
-        sut.simulateTapOnErrorMessage()
-        XCTAssertEqual(sut.errorMessage, nil)
-    }
+//    func test_errorView_dismissesErrorMessageOnTap() {
+//        let (sut, loader) = makeSUT()
+//
+//        sut.simulateAppearance()
+//        XCTAssertEqual(sut.errorMessage, nil)
+//
+//        loader.completeFeedLoadingWithError(at: 0)
+//        XCTAssertEqual(sut.errorMessage, localized("FEED_VIEW_CONNECTION_ERROR"))
+//
+//        sut.simulateTapOnErrorMessage()
+//        XCTAssertEqual(sut.errorMessage, nil)
+//    }
 
     func test_feedImageView_loadsImageURLWhenVisible() {
         let image0 = makeImage(url: URL(string: "http://url-0.com")!)

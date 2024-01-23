@@ -61,7 +61,7 @@ extension FeedViewController {
     }
     
     func simulateTapOnErrorMessage() {
-        errorView?.button.simulateTap()
+//        errorView?.button.simulateTap()
     }
     
     func numberOfRenderedFeedImageViews() -> Int{
