@@ -13,6 +13,8 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     
     @IBOutlet private(set) public var errorView: ErrorView?
     
+    private var loadingControllers = [IndexPath: FeedImageCellController]()
+    
     public var delegate: FeedViewControllerDelegate?
     
     private var tableModel = [FeedImageCellController]() {
@@ -36,11 +38,18 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
         onViewIsAppearing?()
     }
     
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.sizeTableHeaderToFit()
+    }
+    
     @IBAction private func refresh() {
         delegate?.didRequestFeedRefresh()
     }
     
     public func display(_ cellControllers: [FeedImageCellController]) {
+        loadingControllers = [:]
         tableModel = cellControllers
     }
     
@@ -53,11 +62,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     }
     
     public func display(_ viewModel: FeedErrorViewModel) {
-        if let error = viewModel.message {
-            errorView?.show(message: error)
-        } else {
-            errorView?.hideMessage()
-        }
+        errorView?.message = viewModel.message
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -83,10 +88,13 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     }
     
     private func cellController(forRowAt indexPath: IndexPath) -> FeedImageCellController {
-        return tableModel[indexPath.row]
+        let controller = tableModel[indexPath.row]
+        loadingControllers[indexPath] = controller
+        return controller
     }
     
     private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
-        cellController(forRowAt: indexPath).cancelLoad()
+        loadingControllers[indexPath]?.cancelLoad()
+        loadingControllers[indexPath] = nil
     }
 }

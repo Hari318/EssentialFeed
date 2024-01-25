@@ -16,3 +16,13 @@ extension UIButton {
         }
     }
 }
+
+extension UIControl {
+    func simulate(event: UIControl.Event) {
+        allTargets.forEach { target in
+            actions(forTarget: target, forControlEvent: .touchUpInside)?.forEach {
+                (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
