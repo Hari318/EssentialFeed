@@ -44,6 +44,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         configureWindow()
+//        print("Traits", window?.traitCollection)
+//        print("---------------------------------")
+//        print("Size", window?.bounds.size)
+//        print("---------------------------------")
+//        print("Size", window?.safeAreaInsets)
+//        print("---------------------------------")
+//        print("Size", window?.layoutMargins)
     }
     
     func configureWindow() {

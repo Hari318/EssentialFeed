@@ -88,11 +88,11 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
         return (sut, store)
     }
     
-    private func failure() -> LocalFeedImageDataLoader.Result {
+    private func failure() -> Result<Data, Error> {
         return .failure(LocalFeedImageDataLoader.LoadError.failed)
     }
     
-    private func notFound() -> LocalFeedImageDataLoader.Result {
+    private func notFound() -> Result<Data, Error> {
         return .failure(LocalFeedImageDataLoader.LoadError.notFound)
     }
     
