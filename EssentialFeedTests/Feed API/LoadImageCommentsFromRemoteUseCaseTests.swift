@@ -79,19 +79,19 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
         }
     }
     
-    func test_load_deliversFeedItemsOn2xxHttpResponseWithJsonList(){
+    func test_load_deliversItemsOn2xxHttpResponseWithJsonList(){
         let (sut, client) = makeSUT()
         
-        let item1 = makeFeedItem(id: UUID(),
-                             description: nil,
-                             location: nil,
-                             imageURL: URL(string: "http://url1.com")!)
+        let item1 = makeItem(id: UUID(),
+                             message: "a message",
+                             createdAt: (Date(timeIntervalSince1970: 1598627222), "2020-08-28Т15:07:02+00:00"),
+                             username: "a username")
         
         
-        let item2 = makeFeedItem(id: UUID(),
-                             description: "A description",
-                             location: "A location",
-                             imageURL: URL(string: "http://url2.com")!)
+        let item2 = makeItem(id: UUID(),
+                             message: "another message",
+                             createdAt: (Date(timeIntervalSince1970: 1577881882), "2020-01-01T12:31:22+00:00" ),
+                             username: "another username")
         
         let models = [item1.model, item2.model]
         
@@ -120,7 +120,7 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT(url: URL = URL(string: "https://url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (RemoteImageCommentsLoader, HTTPClientSpy){
+    private func makeSUT(url: URL = URL(string: "https://url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteImageCommentsLoader, client: HTTPClientSpy){
         let client = HTTPClientSpy()
         let sut = RemoteImageCommentsLoader(url: url, client: client)
         trackMemoryLeaks(instance: client, file: file, line: line)
@@ -145,23 +145,26 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
             exp.fulfill()
         }
         action()
+        
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func makeFeedItem(id: UUID,
-                         description: String? = nil,
-                         location: String? = nil,
-                         imageURL: URL) -> (model: FeedImage, json: [String: Any]){
-        let model = FeedImage(id: id,
-                             description: description,
-                             location: location,
-                             url: imageURL)
-        let json = [
+    private func makeItem(id: UUID,
+                         message: String,
+                          createdAt: (date: Date, iso8601String: String),
+                         username: String) -> (model: ImageComment, json: [String: Any]) {
+        let model = ImageComment(id: id,
+                              message: message,
+                                 createdAt: createdAt.date,
+                                 username: username)
+        let json: [String: Any] = [
             "id": id.uuidString,
-            "description": description,
-            "location": location,
-            "image": imageURL.absoluteString
-        ].compactMapValues{$0}
+            "message": message,
+            "created_at": createdAt.iso8601String,
+            "author": [
+                "username": username
+            ]
+        ]
         
         return (model, json)
     }
