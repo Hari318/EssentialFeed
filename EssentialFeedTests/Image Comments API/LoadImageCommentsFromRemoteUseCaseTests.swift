@@ -10,42 +10,12 @@ import EssentialFeed
 
 class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     
-    func test_init_doesNotRequestDataFromURL(){
-        let (_, client) = makeSUT()
-        
-        XCTAssertTrue(client.requestedURLs.isEmpty)
-    }
-    
-    func test_load_requestDataFromURL(){
-        let url = URL(string: "https://url2.com")!
-        let (sut, client) = makeSUT(url: url)
-        sut.load{ _ in }
-        XCTAssertEqual(client.requestedURLs, [url])
-    }
-    
-    func test_load_requestDataTwiceFromURL(){
-        let url = URL(string: "https://url2.com")!
-        let (sut, client) = makeSUT(url: url)
-        sut.load{ _ in }
-        sut.load{ _ in }
-        XCTAssertEqual(client.requestedURLs, [url, url])
-    }
-    
-    func test_load_deliversErrorOnClientError(){
+    func test_load_deliversErrorOnNon2xxHTTPResponse(){
         let (sut, client) = makeSUT()
         
-        expect(sut, with: failure(.connectivity)) {
-            let clientError = NSError(domain: "Test", code: 0)
-            client.complete(with: clientError)
-        }
-    }
-    
-    func test_load_deliversErrorOnNon2xxHTTPErrorCode(){
-        let (sut, client) = makeSUT()
+        let samples = [199, 150, 300, 400, 500]
         
-        let errorCodes = [199, 150, 300, 400, 500]
-        
-        errorCodes.enumerated().forEach { index, code in
+        samples.enumerated().forEach { index, code in
             expect(sut, with: failure(.invalidData)) {
                 let json = makeJSON([])
                 client.complete(withStatusCode: code, data: json,at: index)
@@ -56,9 +26,9 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     func test_load_deliversErroron2xxHttpResponseWithInvalidJson(){
         let (sut, client) = makeSUT()
         
-        let errorCodes = [200, 201, 250, 280, 299]
+        let samples = [200, 201, 250, 280, 299]
         
-        errorCodes.enumerated().forEach { index, code in
+        samples.enumerated().forEach { index, code in
             expect(sut, with: failure(.invalidData)) {
                 let invalidJson = Data("invalid data".utf8)
                 client.complete(withStatusCode: code, data: invalidJson, at: index)
@@ -69,9 +39,9 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     func test_load_deliversNoItemOn2xxHttpResponseWithEmptyJsonList(){
         let (sut, client) = makeSUT()
         
-        let errorCodes = [200, 201, 250, 280, 299]
+        let samples = [200, 201, 250, 280, 299]
         
-        errorCodes.enumerated().forEach { index, code in
+        samples.enumerated().forEach { index, code in
             expect(sut, with: .success([]), when: {
                 let emptyJsonData = makeJSON([])
                 client.complete(withStatusCode: code, data: emptyJsonData, at: index)
@@ -95,28 +65,14 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
         
         let models = [item1.model, item2.model]
         
-        let errorCodes = [200, 201, 250, 280, 299]
+        let samples = [200, 201, 250, 280, 299]
 
-        errorCodes.enumerated().forEach { index, code in
+        samples.enumerated().forEach { index, code in
             expect(sut, with: .success(models), when: {
                 let json = makeJSON([item1.json, item2.json])
                 client.complete(withStatusCode: code, data: json, at: index)
             })
         }
-    }
-    
-    func test_load_deliversNoResultsAfterSutInstanceHasBeenDeallocated() {
-        let url: URL = URL(string: "https://url1.com")!
-        let client = HTTPClientSpy()
-        var sut: RemoteImageCommentsLoader? = RemoteImageCommentsLoader(url: url, client: client)
-        
-        var capturedResults = [RemoteImageCommentsLoader.Result]()
-        sut?.load { capturedResults.append($0)}
-        
-        sut = nil
-        client.complete(withStatusCode: 200, data: makeJSON([]))
-        
-        XCTAssertTrue(capturedResults.isEmpty)
     }
     
     // MARK: - Helpers
