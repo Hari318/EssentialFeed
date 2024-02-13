@@ -54,7 +54,7 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
         
         let item1 = makeItem(id: UUID(),
                              message: "a message",
-                             createdAt: (Date(timeIntervalSince1970: 1598627222), "2020-08-28Т15:07:02+00:00"),
+                             createdAt: (Date(timeIntervalSince1970: 1598627222), "2020-08-28T15:07:02+00:00"),
                              username: "a username")
         
         
