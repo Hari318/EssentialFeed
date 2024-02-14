@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }()
     
     private let remoteUrl = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-    private lazy var remoteFeedLoader = RemoteFeedLoader(url: remoteUrl, client: httpClient)
+    private lazy var remoteFeedLoader = RemoteLoader(url: remoteUrl, client: httpClient, mapper: FeedItemsMapper.map)
     
     private lazy var localFeedLoader: LocalFeedLoader = {
         LocalFeedLoader(store: store, currentDate: Date.init)
@@ -108,6 +108,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     .loadImageDataPublisher(from: url)
                     .caching(to: localImageLoader, using: url)
             })
+    }
+}
+
+public typealias RemoteImageCommentsLoader = RemoteLoader<[ImageComment]>
+
+public extension RemoteImageCommentsLoader {
+    convenience init(url: URL, client: HTTPClient) {
+        self.init(url: url, client: client, mapper: ImageCommentsMapper.map)
     }
 }
 
