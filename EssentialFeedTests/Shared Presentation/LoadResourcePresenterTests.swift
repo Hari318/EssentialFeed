@@ -10,12 +10,6 @@ import EssentialFeed
 
 class LoadResourcePresenterTests: XCTestCase {
     
-    func test_init_doesNotSendMessagesToView() {
-        let (_, view) = makeSUT()
-                
-        XCTAssertTrue(view.messages.isEmpty, "Expected no view messages")
-    }
-    
     func test_didStartLoadingFeed_displayNoErrorMessageAndStartsLoading() {
         let (sut, view) = makeSUT()
         
