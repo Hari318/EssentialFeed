@@ -150,10 +150,10 @@
 				475D80042B53B620009A6407 /* FeedViewAdapter.swift */,
 				475D80052B53B620009A6407 /* FeedLoaderPressentationAdapter.swift */,
 				475D80062B53B620009A6407 /* FeedImageDataLoaderPresentationAdapter.swift */,
+				47569D1A2B655AA100FF343F /* CombineHelpers.swift */,
 				470D7CEA2B3AC87B00B98223 /* Assets.xcassets */,
 				470D7CEC2B3AC87B00B98223 /* LaunchScreen.storyboard */,
 				470D7CEF2B3AC87B00B98223 /* Info.plist */,
-				47569D1A2B655AA100FF343F /* CombineHelpers.swift */,
 			);
 			path = EssentialApp;
 			sourceTree = "<group>";

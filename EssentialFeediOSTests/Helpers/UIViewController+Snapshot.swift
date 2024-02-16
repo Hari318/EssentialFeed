@@ -36,6 +36,24 @@ struct SnapshotConfiguration {
                 .init(userInterfaceStyle: style)
             ]))
     }
+    
+    static func iPhone15Pro(style: UIUserInterfaceStyle) -> SnapshotConfiguration {
+        return SnapshotConfiguration(
+            size: CGSize(width: 393, height: 852),
+            safeAreaInsets: UIEdgeInsets(top: 59, left: 0, bottom: 34, right: 0),
+            layoutMargins: UIEdgeInsets(top: 67, left: 8, bottom: 42, right: 8),
+            traitCollection: UITraitCollection(traitsFrom: [
+                .init(forceTouchCapability: .available),
+                .init(layoutDirection: .leftToRight),
+                .init(preferredContentSizeCategory: .large),
+                .init(userInterfaceIdiom: .phone),
+                .init(horizontalSizeClass: .compact),
+                .init(verticalSizeClass: .regular),
+                .init(displayScale: 3),
+                .init(displayGamut: .P3),
+                .init(userInterfaceStyle: style)
+            ]))
+    }
 }
 
 private final class SnapshotWindow: UIWindow {
