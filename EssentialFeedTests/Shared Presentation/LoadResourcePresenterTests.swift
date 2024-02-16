@@ -10,7 +10,7 @@ import EssentialFeed
 
 class LoadResourcePresenterTests: XCTestCase {
     
-    func test_didStartLoadingFeed_displayNoErrorMessageAndStartsLoading() {
+    func test_didStartLoading_displaysNoErrorMessageAndStartsLoading() {
         let (sut, view) = makeSUT()
         
         sut.didStartLoading()
