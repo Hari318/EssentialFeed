@@ -35,7 +35,7 @@ class LoadResourcePresenterTests: XCTestCase {
         
         sut.didFinishLoadingFeed(with: anyError())
         
-        XCTAssertEqual(view.messages, [.display(errorMessage: localized("FEED_VIEW_CONNECTION_ERROR")),
+        XCTAssertEqual(view.messages, [.display(errorMessage: localized("GENERIC_CONNECTION_ERROR")),
                                        .display(isLoading: false)])
     }
     
