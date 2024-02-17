@@ -20,12 +20,13 @@ class LoadResourcePresenterTests: XCTestCase {
     }
     
     func test_didFinishLoadingFeed_displayFeedAndStopsLoading() {
-        let (sut, view) = makeSUT()
-        let feed = uniqueImageFeed().models
+        let (sut, view) = makeSUT(mapper: { resource in
+        resource + " view model"
+        })
         
-        sut.didFinishLoadingFeed(with: feed)
+        sut.didFinishLoading(with: "resource")
         
-        XCTAssertEqual(view.messages, [.display(feed: feed),
+        XCTAssertEqual(view.messages, [.display(resourceViewModel: "resource view model"),
                                        .display(isLoading: false)])
     }
     
@@ -40,11 +41,11 @@ class LoadResourcePresenterTests: XCTestCase {
     
     //MARK: - Helpers
     
-    private class ViewSpy: FeedView, FeedErrorView, FeedLoadingView {
+    private class ViewSpy: ResourceView, FeedErrorView, FeedLoadingView {
         enum Message: Hashable {
             case display(errorMessage: String?)
             case display(isLoading: Bool)
-            case display(feed: [FeedImage])
+            case display(resourceViewModel: String)
         }
         private(set) var messages = Set<Message>()
         
@@ -56,14 +57,18 @@ class LoadResourcePresenterTests: XCTestCase {
             messages.insert(.display(isLoading: viewModel.isLoading))
         }
         
-        func display(_ viewModel: FeedViewModel) {
-            messages.insert(.display(feed: viewModel.feed))
+        func display(_ viewModel: String) {
+            messages.insert(.display(resourceViewModel: viewModel))
         }
     }
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LoadResourcePresenter, view: ViewSpy) {
+    private func makeSUT(
+        mapper: @escaping LoadResourcePresenter.Mapper = { _ in "any" },
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> (sut: LoadResourcePresenter, view: ViewSpy) {
         let view = ViewSpy()
-        let sut = LoadResourcePresenter(feedView: view, loadingView: view, errorView: view)
+        let sut = LoadResourcePresenter(resourceView: view, loadingView: view, errorView: view, mapper: mapper)
         trackMemoryLeaks(instance: view, file: file, line: line)
         trackMemoryLeaks(instance: sut, file: file, line: line)
         return (sut, view)
