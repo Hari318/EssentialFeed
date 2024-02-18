@@ -53,6 +53,8 @@
 		476298422B824C7700A14B8A /* SharedLocalizationTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476298412B824C7700A14B8A /* SharedLocalizationTestHelpers.swift */; };
 		476298442B8263CA00A14B8A /* ResourceLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476298432B8263CA00A14B8A /* ResourceLoadingView.swift */; };
 		476298462B82641000A14B8A /* ResourceLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476298452B82641000A14B8A /* ResourceLoadingViewModel.swift */; };
+		476298482B82654D00A14B8A /* ResourceErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476298472B82654D00A14B8A /* ResourceErrorView.swift */; };
+		4762984A2B82658500A14B8A /* ResourceErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476298492B82658500A14B8A /* ResourceErrorViewModel.swift */; };
 		476992D72B2CA2BC001E6477 /* HTTPURLResponse+StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476992D62B2CA2BC001E6477 /* HTTPURLResponse+StatusCode.swift */; };
 		476992DB2B2CAC9F001E6477 /* URLProtocolStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476992D82B2CAB7F001E6477 /* URLProtocolStub.swift */; };
 		47748B452B36A65B00092956 /* CoreDataFeedStore+FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47748B442B36A65B00092956 /* CoreDataFeedStore+FeedStore.swift */; };
@@ -205,6 +207,8 @@
 		476298412B824C7700A14B8A /* SharedLocalizationTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocalizationTestHelpers.swift; sourceTree = "<group>"; };
 		476298432B8263CA00A14B8A /* ResourceLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoadingView.swift; sourceTree = "<group>"; };
 		476298452B82641000A14B8A /* ResourceLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoadingViewModel.swift; sourceTree = "<group>"; };
+		476298472B82654D00A14B8A /* ResourceErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceErrorView.swift; sourceTree = "<group>"; };
+		476298492B82658500A14B8A /* ResourceErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceErrorViewModel.swift; sourceTree = "<group>"; };
 		476992D62B2CA2BC001E6477 /* HTTPURLResponse+StatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+StatusCode.swift"; sourceTree = "<group>"; };
 		476992D82B2CAB7F001E6477 /* URLProtocolStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtocolStub.swift; sourceTree = "<group>"; };
 		47748B442B36A65B00092956 /* CoreDataFeedStore+FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataFeedStore+FeedStore.swift"; sourceTree = "<group>"; };
@@ -441,8 +445,10 @@
 			children = (
 				476297F92B7F449E00A14B8A /* LoadResourcePresenter.swift */,
 				476298432B8263CA00A14B8A /* ResourceLoadingView.swift */,
-				4762983E2B82422E00A14B8A /* Shared.strings */,
 				476298452B82641000A14B8A /* ResourceLoadingViewModel.swift */,
+				476298472B82654D00A14B8A /* ResourceErrorView.swift */,
+				476298492B82658500A14B8A /* ResourceErrorViewModel.swift */,
+				4762983E2B82422E00A14B8A /* Shared.strings */,
 			);
 			path = "Shared Presentation";
 			sourceTree = "<group>";
@@ -957,6 +963,7 @@
 				479C3A492AAE19E10005DAF8 /* LocalFeedImage.swift in Sources */,
 				476297FA2B7F449E00A14B8A /* LoadResourcePresenter.swift in Sources */,
 				475E560F2AE90EDD00AD452F /* FeedStore.xcdatamodeld in Sources */,
+				4762984A2B82658500A14B8A /* ResourceErrorViewModel.swift in Sources */,
 				476298462B82641000A14B8A /* ResourceLoadingViewModel.swift in Sources */,
 				479F18A82B79F00000898003 /* ImageComment.swift in Sources */,
 				479C3A452AADADDF0005DAF8 /* FeedStore.swift in Sources */,
@@ -984,6 +991,7 @@
 				476298442B8263CA00A14B8A /* ResourceLoadingView.swift in Sources */,
 				476992D72B2CA2BC001E6477 /* HTTPURLResponse+StatusCode.swift in Sources */,
 				4796C68C2A21D86000A61190 /* EssentialFeed.docc in Sources */,
+				476298482B82654D00A14B8A /* ResourceErrorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
