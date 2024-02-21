@@ -110,7 +110,7 @@ private class ImageStub: FeedImageCellControllerDelegate {
     weak var controller: FeedImageCellController?
     
     init(description: String?, location: String?, image: UIImage?) {
-        viewModel = FeedImageViewModel(
+        self.viewModel = FeedImageViewModel(
             description: description,
             location: location,
             image: image,
