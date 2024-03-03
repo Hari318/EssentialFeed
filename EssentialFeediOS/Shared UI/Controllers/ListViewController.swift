@@ -10,7 +10,7 @@ public struct CellController {
     let delegate: UITableViewDelegate?
     let dataSourcePrefetching: UITableViewDataSourcePrefetching?
     
-    public init(dataSource: UITableViewDataSource & UITableViewDelegate & UITableViewDataSourcePrefetching) {
+    public init(_ dataSource: UITableViewDataSource & UITableViewDelegate & UITableViewDataSourcePrefetching) {
         self.dataSource = dataSource
         self.delegate = dataSource
         self.dataSourcePrefetching = dataSource
