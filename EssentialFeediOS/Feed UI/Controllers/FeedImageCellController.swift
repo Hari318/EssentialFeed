@@ -45,13 +45,13 @@ extension FeedImageCellController: ResourceView, ResourceLoadingView, ResourceEr
     }
     
     public func cancelLoad() {
-        releaseCellForReuse()
+//        releaseCellForReuse()
         delegate.didCancelImageRequest()
     }
     
-    private func releaseCellForReuse() {
-        cell = nil
-    }
+//    private func releaseCellForReuse() {
+//        cell = nil
+//    }
 }
 
 extension FeedImageCellController: UITableViewDataSource, UITableViewDelegate, UITableViewDataSourcePrefetching {
